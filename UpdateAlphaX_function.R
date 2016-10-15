@@ -10,12 +10,12 @@ UpdateAlphaX <- function(X, D, curr_alphaX, curr_alphaY, nu_prior, lambda_prior,
   
   logAR <- CalcLogLike(outcome = X, design_mat = D[, prop_alphaX_ind],
                        nu_prior = nu_prior, lambda_prior = lambda_prior,
-                       mu_prior = mu_prior[1, prop_alphaX_ind + 1],
+                       mu_prior = mu_prior[c(1, prop_alphaX_ind + 1)],
                        Sigma_prior = Sigma_prior[c(1, prop_alphaX_ind + 1),
                                                  c(1, prop_alphaX_ind + 1)]) -
     CalcLogLike(outcome = X, design_mat = D[, curr_alphaX_ind],
                 nu_prior = nu_prior, lambda_prior = lambda_prior,
-                mu_prior = mu_prior[1, curr_alphaX_ind + 1],
+                mu_prior = mu_prior[c(1, curr_alphaX_ind + 1)],
                 Sigma_prior = Sigma_prior[c(1, curr_alphaX_ind + 1),
                                           c(1, curr_alphaX_ind + 1)])
   logAR <- logAR + LogPriorOdds(proposed = prop_alphaX, current = curr_alphaX,

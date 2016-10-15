@@ -10,8 +10,8 @@ LogPriorOdds <- function(proposed, current, other_model, out_model, omega) {
       }
     }
   } else {  # If we are updating the exposure model.
-    if (other_model[wh_change == 0]) {
-      if (proposed[wh_change == 0]) {
+    if (other_model[wh_change] == 0) {
+      if (proposed[wh_change] == 0) {
         r <- omega
       } else {
         r <- 1 / omega
