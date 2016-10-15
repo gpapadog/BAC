@@ -7,24 +7,22 @@ betas <- rep(NA, Nsims)
 
 for (ii in 2:Nsims) {
   # Update alphaX
-  curr_alphaX <- alphas$X[ii - 1, ]
-  prop_alphaX <- curr_alphaX
-  wh_change <- sample(num_conf, 1)
-  prop_alphaX[wh_change] <- 1 - prop_alphaX[wh_change]
-  curr_alphaY <- alphas$Y[ii - 1]
+  alphaX <- UpdateAlphaX(X = X, D = D, curr_alphaX = alphas$X[ii - 1, ],
+                         curr_alphaY = alphas$Y[ii - 1, ],
+                         nu_prior = nu_priorX, lambda_prior = lambda_priorX,
+                         mu_prior = mu_priorX, Sigma_prior = Sigma_priorX,
+                         omega = omega)
+  alphas$X <- alphaX$alpha
+  acc[1] <- acc[1] + alphaX$acc
   
-  curr_alphaX_ind <- which(curr_alphaX == 1)
-  prop_alphaX_ind <- which(prop_alphaX == 1)
-
-  logAR <- CalcLogLike(outcome = X, design_mat = D[, prop_alphaX_ind],
-                       nu_prior = nu_priorX, lambda_prior = lambda_priorX,
-                       mu_prior = mu_priorX[1, prop_alphaX_ind + 1],
-                       Sigma_prior = Sigma_priorX[c(1, prop_alphaX_ind + 1),
-                                                  c(1, prop_alphaX_ind + 1)]) -
-    CalcLogLike(outcome = X, design_mat = D[, curr_alphaX_ind],
-                nu_prior = nu_priorX, lambda_prior = lambda_priorX,
-                mu_prior = mu_priorX[1, curr_alphaX_ind + 1],
-                Sigma_prior = Sigma_priorX[c(1, curr_alphaX_ind + 1),
-                                           c(1, curr_alphaX_ind + 1)])
-  logAR <- logAR + logPriorOdds()
+  # Update alphaY
+  alphaY <- UpdateAlphaY(Y = Y, X = X, D = D, curr_alphaX = alpha$X[ii, ],
+                         curr_alphaY = alpha$Y[ii - 1, ], beta = betas[ii - 1],
+                         nu_prior = nu_priorY, lambda_prior = lambda_priorY,
+                         mu_prior = mu_priorY, Sigma_prior = Sigma_priorY,
+                         omega = omega)
+  alphas$Y <- alphaY$alpha
+  acc[2] <- acc[2] + alphaY$acc
+  
+  # Update beta.
 }
