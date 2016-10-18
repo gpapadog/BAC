@@ -12,10 +12,10 @@ UpdateAlphaY <- function(Y, X, D, curr_alphaX, curr_alphaY, beta, nu_prior,
   
   logAR <- CalcLogLike(outcome = outcome, design_mat = D[, prop_alphaY_ind],
                        nu_prior = nu_prior, lambda_prior = lambda_prior,
-                       mu_prior = mu_prior[c(1, prop_alphaY_ind + 1)],
+                       mu_prior = mu_prior[c(1, prop_alphaY_ind + 2)],
                        Sigma_prior = Sigma_prior[c(1, prop_alphaY_ind + 2),
                                                  c(1, prop_alphaY_ind + 2)]) -
-    CalcLogLike(outcome = X, design_mat = D[, curr_alphaY_ind],
+    CalcLogLike(outcome = outcome, design_mat = D[, curr_alphaY_ind],
                 nu_prior = nu_prior, lambda_prior = lambda_prior,
                 mu_prior = mu_prior[c(1, curr_alphaY_ind + 2)],
                 Sigma_prior = Sigma_prior[c(1, curr_alphaY_ind + 2),

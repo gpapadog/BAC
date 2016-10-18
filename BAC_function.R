@@ -29,7 +29,7 @@ BAC <- function(X, Y, D, Nsims, mu_priorX = NULL, mu_priorY = NULL, nu_priorX = 
   for (ii in 2:Nsims) {
     
     if (ii %% 100 == 0) {
-      print(paste0(round(Nsims / ii, 2) * 100, '% completed.'))
+      print(paste0(round(ii / Nsims, 2) * 100, '% completed.'))
     }
     # Update alphaX
     alphaX <- UpdateAlphaX(X = X, D = D, curr_alphaX = alphas$X[ii - 1, ],
