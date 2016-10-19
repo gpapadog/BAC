@@ -5,27 +5,27 @@ R package to perform the method of "Bayesian Effect Estimation Accounting for Ad
 
 ## Why use BAC?
 
-1. When the number of possible predictors of the outcome of interest is relative large,
+- When the number of possible predictors of the outcome of interest is relative large,
 model selection is necessary in order to choose an appropriate model.
 
-2. The uncertainty in model selection should be propagated to effect estimates.
+- The uncertainty in model selection should be propagated to effect estimates.
 
-3. Model selection should be perfomed such that we do not miss even one important
+- Model selection should be perfomed such that we do not miss even one important
 confounder of the exposure-outcome relationship.
 
 ## What does BAC do?
 
 Consider a continuous treatment X, a continuous outcome Y, and a set of possible
-confounders D_1, D_2, ..., D_p. BAC models:
+confounders D1, D2, ..., Dp. BAC models:
 
-- X given D_1, D_2, ..., D_p
+- X given D1, D2, ..., Dp
 
-- Y given X, D_1, D_2, ..., D_p
+- Y given X, D1, D2, ..., Dp
 
-allowing only some of the D_1, D_2, ..., D_p to be included in the exposure or the
+allowing only some of the D1, D2, ..., Dp to be included in the exposure or the
 outcome model at each iteration of the MCMC.
 
-The BAC prior links the indicators of inclusion of D_1, D_2, ..., D_p to encourage
+The BAC prior links the indicators of inclusion of D1, D2, ..., Dp to encourage
 the inclusion of the true confounders in the outcome model. Specifically, BAC is
 designed to capture confounders that are weakly associated with the outcome, but
 strongly associated with the exposure, making them strong confounders.
@@ -39,8 +39,8 @@ both the exposure and the outcome models are inverse chi square distributions.
 
 The BAC function in the BAC R package returns a list of:
 - alphaX: posterior samples of the indicators of inclusion for each of the covariates
-D_1, D_2, ..., D_p in the exposure model. Specifically if alphaX[i, j] = 1 if in
-iteration i of the MCMC, D_j was included in the model, and alphaX[i, j] = 0 otherwise.
+D1, D2, ..., Dp in the exposure model. Specifically if alphaX[i, j] = 1 if in
+iteration i of the MCMC, Dj was included in the model, and alphaX[i, j] = 0 otherwise.
 
 - alphaY: posterior samples of the indicators of inclusion for each of the covariates
 in the outcome model.
@@ -48,19 +48,29 @@ in the outcome model.
 - beta: posterior samples of the coefficient of X in the outcome model.
 
 
+## Installing BAC
+Installing and using BAC in Rstudio is straightforward. You will first need the ```devtools``` R package.
+### Install and load ```devtools```
+Simply write ```install.packages('devtools')``` in the console to install it, and load it using ```library(devtools)```.
+### Install and load ```BAC```
+```
+library(devtools)
+
+devtools::install_github("gpapadog/BAC")
+```
 
 
+# BAC example
+
+## toyData
+toyData is a simulated data set of 100 observations with p = 50 potential confounders generated as:
+
+- D1, D2, ..., Dp are independent N(0, 1) variables.
+
+- X | D1, D2, ... Dp ~ N(0.1 * D1 + D2 + D3 + D4, 1)
+
+- Y | X, D1, D2, ..., Dp ~ N(X + D1 + D2 + 0.05 * D3 + D5, 1)
 
 
-
-
-
-
-
-
-
-
-
-
-
+## Analyzing toyData with BAC
 
