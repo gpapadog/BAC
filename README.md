@@ -18,7 +18,7 @@ confounder of the exposure-outcome relationship.
 Consider a continuous treatment X, a continuous outcome Y, and a set of possible
 confounders D_1, D_2, ..., D_p. BAC models:
 
-- X given D_1_, D_2, ..., D_p
+- X given D_1, D_2, ..., D_p
 
 - Y given X, D_1, D_2, ..., D_p
 
@@ -38,9 +38,14 @@ priors on the coefficients are assumed normal, and the prior on the variance ter
 both the exposure and the outcome models are inverse chi square distributions.
 
 The BAC function in the BAC R package returns a list of:
-- alphaX: postior samples of the indicators of inclusion for each of the covariates
-D_1, D_2, ..., D_p. Specifically if alphaX[i, j] = 1 if in iteration i of the MCMC, D_j
-was included in the model
+- alphaX: posterior samples of the indicators of inclusion for each of the covariates
+D_1, D_2, ..., D_p in the exposure model. Specifically if alphaX[i, j] = 1 if in
+iteration i of the MCMC, D_j was included in the model, and alphaX[i, j] = 0 otherwise.
+
+- alphaY: posterior samples of the indicators of inclusion for each of the covariates
+in the outcome model.
+
+- beta: posterior samples of the coefficient of X in the outcome model.
 
 
 
