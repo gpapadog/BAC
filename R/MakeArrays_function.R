@@ -98,6 +98,13 @@ MakeArrays <- function(chains, Nsims, num_conf, starting_alphas,
                                               sigma = Sigma_priorX)
     starting_coefs[2, , ] <- mvnfast::rmvn(chains, mu = mu_priorY,
                                            sigma = Sigma_priorY)
+    
+    # Coefficients with alpha = 0 have coefficient 0.
+    starting_coefs[1, , - c(1, 2)] <- ifelse(starting_alphas[1, , ] == 0, 0,
+                                             starting_coefs[1, , - c(1, 2)])
+    starting_coefs[2, , - c(1, 2)] <- ifelse(starting_alphas[2, , ] == 0, 0,
+                                             starting_coefs[2, , - c(1, 2)])
+    
   }
   coefs[, , 1, ] <- starting_coefs
   
