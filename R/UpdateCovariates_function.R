@@ -25,12 +25,12 @@ UpdateCovariates <- function(X, Y, D, current_coefs, current_alphas,
     # Posterior density of coefficient = 0.
     rest_des_mat <- cbind(1, D[, - jj])
     resid <- X - rest_des_mat %*% current_coefs[2, - c(2, jj + 2)]
-    post_var <- 1 / (prior_sd ^ 2)
-    post_var <- post_var + sum(resid ^ 2) / current_vars[1]
-    post_var <- 1 / post_var
-    post_mean <- prior_mean / (prior_sd ^ 2)
-    post_mean <- post_mean + sum(D[, jj] * resid) / current_vars[1]
-    post_mean <- post_var * post_mean
+    post_quants <- PostQuants(predictor = D[, jj], resid = resid,
+                              prior_mean = mu_priorX[jj + 1],
+                              prior_sd = sqrt(diag(Sigma_priorX)[jj + 1]),
+                              resid_var = current_vars[1])
+    post_mean <- post_quants$post_mean
+    post_var <- post_quants$post_var
     quant3 <- dnorm(x = 0, mean = post_mean, sd = sqrt(post_var), log = TRUE)
     
     prob1 <- exp(quant1 + quant2 + quant3)
@@ -60,12 +60,10 @@ UpdateCovariates <- function(X, Y, D, current_coefs, current_alphas,
     # Posterior density of coefficient = 0.
     rest_des_mat <- cbind(1, X, D[, - jj])
     resid <- Y - rest_des_mat %*% current_coefs[, - (jj + 2)]
-    post_var <- 1 / (prior_sd ^ 2)
-    post_var <- post_var + sum(resid ^ 2) / current_vars[2]
-    post_var <- 1 / post_var
-    post_mean <- prior_mean / (prior_sd ^ 2)
-    post_mean <- post_mean + sum(D[, jj] * resid) / current_vars[2]
-    post_mean <- post_var * post_mean
+    post_quants <- PostQuants(predictor = D[, jj], resid = resid,
+                              prior_mean = mu_priorY[jj + 2],
+                              prior_sd = sqrt(diag(Sigma_priorY)[jj + 2]),
+                              resid_var = current_vars[2])
     quant3 <- dnorm(x = 0, mean = post_mean, sd = sqrt(post_var), log = TRUE)
 
     prob1 <- exp(quant1 + quant2 + quant3)
