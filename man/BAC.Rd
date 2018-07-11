@@ -2,12 +2,13 @@
 % Please edit documentation in R/BAC_function.R
 \name{BAC}
 \alias{BAC}
-\title{Bayesian Adjustment for Confounding
-Function that fits the BAC method of Wang, Parmigianni, Dominici (2012).}
+\title{Bayesian Adjustment for Confounding}
 \usage{
-BAC(X, Y, D, Nsims, mu_priorX = NULL, mu_priorY = NULL, nu_priorX = 0.01,
-  nu_priorY = 0.01, lambda_priorX = 0.01, lambda_priorY = 0.01,
-  Sigma_priorX = NULL, Sigma_priorY = NULL, omega = 50000)
+BAC(X, Y, D, chains, Nsims, mu_priorX = NULL, mu_priorY = NULL,
+  Sigma_priorX = NULL, Sigma_priorY = NULL, alpha_priorX = 0.01,
+  alpha_priorY = 0.01, beta_priorX = 0.01, beta_priorY = 0.01,
+  omega = 50000, starting_alphas = NULL, starting_coefs = NULL,
+  starting_vars = NULL)
 }
 \arguments{
 \item{X}{Vector of the treatment}
@@ -17,42 +18,58 @@ BAC(X, Y, D, Nsims, mu_priorX = NULL, mu_priorY = NULL, nu_priorX = 0.01,
 \item{D}{Matrix or data frame where the columns correspond to all possible
 predictors of Y, and the rows correspond to the units.}
 
+\item{chains}{Number of MCMC chains.}
+
 \item{Nsims}{Number of posterior samples we wish to get.}
 
-\item{mu_priorX}{The mean of the normal prior on the coefficients of the exposure
-model, where the first element corresponds to the intercept, and the remaining to
-the coefficients in from of the columns in D. The length of this vector must be
+\item{mu_priorX}{The mean of the normal prior on the coefficients of the
+exposure model, where the first element corresponds to the intercept, and
+the remaining to the coefficients of the columns in D. The length of this
+vector must be equal to 1 + the number of columns in D.}
+
+\item{mu_priorY}{The mean of the normal prior on the coefficients of the
+outcome model, where the first element corresponds to the intercept, the
+second to the exposure, and the remaining to the coefficients in from of the
+columns in D. The length of this vector must be equal to 2 + the number of
+columns in D.}
+
+\item{Sigma_priorX}{The covariance matrix of the normal prior on the
+coefficients of the exposure model. The dimension of the matrix should be
 equal to 1 + the number of columns in D.}
 
-\item{mu_priorY}{The mean of the normal prior on the coefficients of the outcome
-model, where the first element corresponds to the intercept, the second to the
-treatment, and the remaining to the coefficients in from of the columns in D. The
-length of this vector must be equal to 2 + the number of columns in D.}
+\item{Sigma_priorY}{The covariance matrix of the normal prior on the
+coefficients of the outcome model. The dimension of the matrix should be
+equal to 2 + the number of columns in D.}
 
-\item{nu_priorX}{The value of nu in the prior of sigma square for the exposure
-model. Defaults to 0.01.}
+\item{alpha_priorX}{The value of alpha in the inverse gamma prior for the
+residual variance of the exposure model. Defaults to 0.01.}
 
-\item{nu_priorY}{The value of nu in the prior of sigma square for the outcome model.
-Defaults to 0.01.}
+\item{alpha_priorY}{The value of alpha in the inverse gamma prior for the
+residual variance of the outcome model. Defaults to 0.01.}
 
-\item{lambda_priorX}{The value of lambda in the prior of sigma square for the
-exposure model. Defaults to 0.01.}
+\item{beta_priorX}{The value of beta in the inverse gamma prior for the
+residual variance of the exposure model. Defaults to 0.01.}
 
-\item{lambda_priorY}{The value of lambda in the prior of sigma square for the
-outcome model. Defaults to 0.01.}
-
-\item{Sigma_priorX}{The covariance matrix of the normal prior on the coefficients of
-the exposure model. The structure should be in the same order as mu_priorX and the
-matrix must be symmetric with dimensions equal to 1 + the number of columns in D.}
-
-\item{Sigma_priorY}{The covariance matrix of the normal prior on the coefficients
-of the outcome model. The structure should be in the same order as mu_priorY and the
-matrix must be symmetric with dimensions equal to 2 + the number of columns in D.}
+\item{beta_priorY}{The value of beta in the inverse gamma prior for the
+residual variance of the outcome model. Defaults to 0.01.}
 
 \item{omega}{The omega parameter of the BAC prior. Defaults to 50000.}
+
+\item{starting_alphas}{Array of dimensions: model (exposure or outcome),
+chains, potential confounders. Entries 0/1 represent exclusion/inclusion
+of a covariate in the model. If left NULL, values are set from the prior.}
+
+\item{starting_coefs}{Array with the starting values of all coefficients.
+Dimensions are: Exposure/Outcome model, chains, and covariate (intercept,
+coefficient of exposure, covariates). The coefficient of exposure should be
+NA for the exposure model. If left NULL, values are set from the prior with
+variance divided by 50 ^ 2.}
+
+\item{starting_vars}{Array including the starting values for the residual
+variances. Dimensions correspond to: Exposure/Outcome model, and chains. If
+NULL, values are set from an inverse gamma with parameters alpha and beta
+set to the prior values times 200.}
 }
 \description{
-Bayesian Adjustment for Confounding
 Function that fits the BAC method of Wang, Parmigianni, Dominici (2012).
 }
-
