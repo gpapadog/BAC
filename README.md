@@ -16,7 +16,7 @@ confounder of the exposure-outcome relationship.
 ## What does BAC do?
 
 Consider a continuous treatment X, a continuous outcome Y, and a set of possible
-confounders D<sub>1</sub>, D<sub>2</sub>, ..., D<sub>p</sub>. BAC models:
+confounders **D** = {D<sub>1</sub>, D<sub>2</sub>, ..., D<sub>p</sub>}. BAC models:
 
 - X given D<sub>1</sub>, D<sub>2</sub>, ..., D<sub>p</sub>
 
@@ -34,14 +34,15 @@ strongly associated with the exposure, making them strong confounders.
 ## What does the BAC R package do?
 
 The BAC R package models the exposure X as normal with mean linear in the covariates
-D, and the outcome Y also as normal with mean linear in X and in the covariates. The
+**D**, and the outcome Y also as normal with mean linear in X and in the covariates. The
 priors on the coefficients are assumed normal, and the prior on the variance terms for
-both the exposure and the outcome models are inverse chi square distributions.
+both the exposure and the outcome models are inverse gamma distributions.
 
 The BAC function in the BAC R package returns a list of:
 - alphaX: posterior samples of the indicators of inclusion for each of the covariates
-D1, D2, ..., Dp in the exposure model. Specifically if alphaX[i, j] = 1 if in
-iteration i of the MCMC, Dj was included in the model, and alphaX[i, j] = 0 otherwise.
+D<sub>1</sub>, D<sub>2</sub>, ..., D<sub>p</sub> in the exposure model. Specifically
+if alphaX[i, j] = 1 if in iteration i of the MCMC, Dj was included in the model,
+and alphaX[i, j] = 0 otherwise.
 
 - alphaY: posterior samples of the indicators of inclusion for each of the covariates
 in the outcome model.
