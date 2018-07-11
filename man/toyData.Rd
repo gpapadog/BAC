@@ -14,8 +14,7 @@
 toyData
 }
 \description{
-A data set containing simulated data with a continuos exposure, outcome and
+A data set containing simulated data with a continuous exposure, outcome and
 covariates.
 }
 \keyword{datasets}
-
