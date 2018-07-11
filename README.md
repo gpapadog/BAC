@@ -16,16 +16,17 @@ confounder of the exposure-outcome relationship.
 ## What does BAC do?
 
 Consider a continuous treatment X, a continuous outcome Y, and a set of possible
-confounders D1, D2, ..., Dp. BAC models:
+confounders D<sub>1</sub>, D<sub>2</sub>, ..., D<sub>p</sub>. BAC models:
 
-- X given D1, D2, ..., Dp
+- X given D<sub>1</sub>, D<sub>2</sub>, ..., D<sub>p</sub>
 
-- Y given X, D1, D2, ..., Dp
+- Y given D<sub>1</sub>, D<sub>2</sub>, ..., D<sub>p</sub>
 
-allowing only some of the D1, D2, ..., Dp to be included in the exposure or the
+allowing only some of the D<sub>1</sub>, D<sub>2</sub>, ..., D<sub>p</sub> to be included in the exposure or the
 outcome model at each iteration of the MCMC.
 
-The BAC prior links the indicators of inclusion of D1, D2, ..., Dp to encourage
+The BAC prior links the indicators of inclusion of D<sub>1</sub>, D<sub>2</sub>,
+..., D<sub>p</sub> to encourage
 the inclusion of the true confounders in the outcome model. Specifically, BAC is
 designed to capture confounders that are weakly associated with the outcome, but
 strongly associated with the exposure, making them strong confounders.
