@@ -3,13 +3,14 @@
 #' @param chains The number of MCMC chains.
 #' @param Nsims The number of posterior samples per chain.
 #' @param num_conf The number of potential confounders.
-#' @param starting_alphas Matrix of dimensions: model (exposure or outcome),
-#' potential confounders. Entries 0/1 represent exclusion/inclusion of a
-#' covariate in the model. If NULL, values are set from the prior.
-#' @param starting_coefs Matrix with the starting values of all coefficients.
+#' @param starting_alphas Array of dimensions: model (exposure or outcome),
+#' chains, potential confounders. Entries 0/1 represent exclusion/inclusion of
+#' a covariate in the model. If NULL, values are set from the prior.
+#' @param starting_coefs Array with the starting values of all coefficients.
 #' Dimensions are: Exposure/Outcome model, chains, and covariate (intercept,
 #' coefficient of exposure, covariates). The coefficient of exposure should be
-#' NA for the exposure model. If NULL, values are set from the prior.
+#' NA for the exposure model. If NULL, values are set from the normal with mean
+#' zero and variance that of the prior divided by 50 ^ 2.
 #' @param starting_vars Array including the starting values for the residual
 #' variances. Dimensions correspond to: Exposure/Outcome model, and chains. If
 #' NULL, values are set from an inverse gamma with parameters alpha and beta
@@ -95,9 +96,9 @@ MakeArrays <- function(chains, Nsims, num_conf, starting_alphas,
   if (is.null(starting_coefs)) {
     starting_coefs <- array(NA, dim = c(2, chains, num_conf + 2))
     starting_coefs[1, , - 2] <- mvnfast::rmvn(chains, mu = mu_priorX,
-                                              sigma = Sigma_priorX)
+                                              sigma = Sigma_priorX / (50 ^ 2))
     starting_coefs[2, , ] <- mvnfast::rmvn(chains, mu = mu_priorY,
-                                           sigma = Sigma_priorY)
+                                           sigma = Sigma_priorY / (50 ^ 2))
     
     # Coefficients with alpha = 0 have coefficient 0.
     starting_coefs[1, , - c(1, 2)] <- ifelse(starting_alphas[1, , ] == 0, 0,

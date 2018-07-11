@@ -11,7 +11,7 @@ PostQuants <- function(predictor, resid, prior_mean, prior_sd, resid_var) {
   
   prior_var <- prior_sd ^ 2
   
-  post_var <- 1 / prior_var + sum(resid ^ 2) / resid_var
+  post_var <- 1 / prior_var + sum(predictor ^ 2) / resid_var
   post_var <- 1 / post_var
   
   post_mean <- prior_mean / prior_var + sum(predictor * resid) / resid_var

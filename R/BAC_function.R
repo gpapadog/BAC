@@ -32,13 +32,14 @@
 #' @param beta_priorY The value of beta in the inverse gamma prior for the
 #' residual variance of the outcome model. Defaults to 0.01.
 #' @param omega The omega parameter of the BAC prior. Defaults to 50000.
-#' @param starting_alphas Matrix of dimensions: model (exposure or outcome),
-#' potential confounders. Entries 0/1 represent exclusion/inclusion of a
-#' covariate in the model. If left NULL, values are set from the prior.
-#' @param starting_coefs Matrix with the starting values of all coefficients.
+#' @param starting_alphas Array of dimensions: model (exposure or outcome),
+#' chains, potential confounders. Entries 0/1 represent exclusion/inclusion
+#' of a covariate in the model. If left NULL, values are set from the prior.
+#' @param starting_coefs Array with the starting values of all coefficients.
 #' Dimensions are: Exposure/Outcome model, chains, and covariate (intercept,
 #' coefficient of exposure, covariates). The coefficient of exposure should be
-#' NA for the exposure model. If left NULL, values are set from the prior.
+#' NA for the exposure model. If left NULL, values are set from the prior with
+#' variance divided by 50 ^ 2.
 #' @param starting_vars Array including the starting values for the residual
 #' variances. Dimensions correspond to: Exposure/Outcome model, and chains. If
 #' NULL, values are set from an inverse gamma with parameters alpha and beta
@@ -83,7 +84,7 @@ BAC <- function(X, Y, D, chains, Nsims, mu_priorX = NULL, mu_priorY = NULL,
   arrays <- MakeArrays(chains = chains, Nsims = Nsims, num_conf = num_conf,
                        starting_alphas = starting_alphas,
                        starting_coefs = starting_coefs,
-                       starting_vars = starting_vars, omega = omega
+                       starting_vars = starting_vars, omega = omega,
                        mu_priorX = mu_priorX, mu_priorY = mu_priorY,
                        Sigma_priorX = Sigma_priorX,
                        Sigma_priorY = Sigma_priorY,
@@ -146,7 +147,9 @@ BAC <- function(X, Y, D, chains, Nsims, mu_priorX = NULL, mu_priorY = NULL,
       # Update the coefficient of exposure in the outcome model.
       r <- UpdateExpCoef(X = X, Y = Y, D = D, current_coefs = current_coefs,
                          current_vars = current_vars, mu_priorY = mu_priorY,
-                         Sigma_priorY = Sigma_priorY) 
+                         Sigma_priorY = Sigma_priorY)
+      coefs[2, cc, ii, 2] <- r
+      current_coefs <- coefs[, cc, ii, ]
       
     }
   }
