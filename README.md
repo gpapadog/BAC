@@ -76,3 +76,14 @@ toyData is a simulated data set of 100 observations with p = 50 potential confou
 
 ## Analyzing toyData with BAC
 
+```
+library(BAC)
+library(ggplot2)
+
+data(toyData)
+X <- toyData[, 2]
+Y <- toyData[, 1]
+D <- toyData[, - c(1, 2)]
+
+bac <- BAC(X = X, Y = Y, D = D, Nsims = 1000, chains = 3)
+```
