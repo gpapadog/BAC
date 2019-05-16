@@ -78,7 +78,6 @@ toyData is a simulated data set of 100 observations with p = 50 potential confou
 
 ```
 library(BAC)
-library(ggplot2)
 
 data(toyData)
 X <- toyData[, 2]
