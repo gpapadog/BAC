@@ -2,7 +2,7 @@ library(BAC)
 library(ggplot2)
 library(glmnet)
 
-library(toyData)
+data(toyData)
 
 exp <- toyData[, 2]
 out <- toyData[, 1]
@@ -58,26 +58,4 @@ with(unique_alpha, max(proportion))
 
 
 
-
-
-# Posterior inclusion probabilities as a function of omega
-omega <- c(1, 50, 500, 2000, 5000)
-inc_prob <- matrix(NA, nrow = length(omega), ncol = num_cov)
-for (oo in 1 : length(omega)) {
-  set.seed(oo)
-  bac_oo <- BAC(X = exp, Y = out, D = covs, Nsims = 1000, chains = 1,
-                omega = omega[oo])
-  inc_prob[oo, ] <- apply(bac_oo$alphas[2, 1, 500 : 1000, ], 2, mean)
-}
-
-plot_inc <- reshape2::melt(inc_prob)
-plot_inc$omega <- omega[plot_inc$Var1]
-plot_inc$covariate <- paste0('C', plot_inc$Var2)
-
-ggplot(data = subset(plot_inc, Var2 %in% c(1, 3, 4, 6)),
-       aes(x = omega, y = value, color = covariate)) +
-  geom_line(size = 1.5) +
-  geom_point(size = 3) +
-  theme_bw() +
-  ylab('Posterior Inclusion Probability')
 
