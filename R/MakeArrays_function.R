@@ -75,9 +75,9 @@ MakeArrays <- function(chains, Nsims, num_conf, starting_alphas,
   # Starting values for the variances.
   if (is.null(starting_vars)) {
     starting_vars <- array(NA, dim = c(2, chains))
-    starting_vars[1, ] <- invgamma::rinvgamma(chains, alpha_priorX * 200,
+    starting_vars[1, ] <- MCMCpack::rinvgamma(chains, alpha_priorX * 200,
                                               beta_priorX * 200)
-    starting_vars[2, ] <- invgamma::rinvgamma(chains, alpha_priorY * 200,
+    starting_vars[2, ] <- MCMCpack::rinvgamma(chains, alpha_priorY * 200,
                                               beta_priorY * 200)
   }
   variances[, , 1] <- starting_vars

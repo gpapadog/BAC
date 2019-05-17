@@ -31,7 +31,7 @@ UpdateVariances <- function(X, Y, D, current_alphas, current_coefs,
   des_mat <- cbind(1, D)
   resid <- X - des_mat %*% current_coefs[1, - 2]
   beta_new <- beta_priorX + sum(resid ^ 2) / 2
-  r[1] <- invgamma::rinvgamma(1, shape = alpha_new, rate = beta_new)
+  r[1] <- MCMCpack::rinvgamma(1, shape = alpha_new, scale = beta_new)
   
   
   # For the outcome model.
@@ -40,7 +40,7 @@ UpdateVariances <- function(X, Y, D, current_alphas, current_coefs,
   des_mat <- cbind(1, X, D)
   resid <- Y - des_mat %*% current_coefs[2, ]
   beta_new <- beta_priorY + sum(resid ^ 2) / 2
-  r[2] <- invgamma::rinvgamma(1, shape = alpha_new, rate = beta_new)
+  r[2] <- MCMCpack::rinvgamma(1, shape = alpha_new, scale = beta_new)
   
   return(r)
 }
