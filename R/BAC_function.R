@@ -100,8 +100,7 @@ BAC <- function(X, Y, D, chains, Nsims, mu_priorX = NULL, mu_priorY = NULL,
 
       # Print progress.
       if (ii %% 100 == 0) {
-        print(paste0('Chain ', cc, ' - ', round(ii / Nsims, 2) * 100,
-                     '% completed.'))
+        cat('Chain', cc, '-', round(ii / Nsims, 2) * 100, '% completed.\n')
       }
       
       current_alphas <- alphas[, cc, ii - 1, ]
