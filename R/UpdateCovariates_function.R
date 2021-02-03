@@ -24,7 +24,7 @@ UpdateCovariates <- function(X, Y, D, current_coefs, current_alphas,
     
     # Posterior density of coefficient = 0.
     rest_des_mat <- cbind(1, D[, - jj])
-    resid <- X - rest_des_mat %*% current_coefs[1, - c(2, jj + 2)]
+    resid <- X - rest_des_mat %*% r$coefs[1, - c(2, jj + 2)]
     post_quants <- PostQuants(predictor = D[, jj], resid = resid,
                               prior_mean = mu_priorX[jj + 1],
                               prior_sd = sqrt(diag(Sigma_priorX)[jj + 1]),
@@ -63,7 +63,7 @@ UpdateCovariates <- function(X, Y, D, current_coefs, current_alphas,
     
     # Posterior density of coefficient = 0.
     rest_des_mat <- cbind(1, X, D[, - jj])
-    resid <- Y - rest_des_mat %*% current_coefs[2, - (jj + 2)]
+    resid <- Y - rest_des_mat %*% r$coefs[2, - (jj + 2)]
     post_quants <- PostQuants(predictor = D[, jj], resid = resid,
                               prior_mean = mu_priorY[jj + 2],
                               prior_sd = sqrt(diag(Sigma_priorY)[jj + 2]),
