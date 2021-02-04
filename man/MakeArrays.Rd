@@ -4,9 +4,23 @@
 \alias{MakeArrays}
 \title{Arrays to save MCMC posterior samples.}
 \usage{
-MakeArrays(chains, Nsims, num_conf, starting_alphas, starting_coefs,
-  starting_vars, omega = 50000, mu_priorX, mu_priorY, Sigma_priorX,
-  Sigma_priorY, alpha_priorX, alpha_priorY, beta_priorX, beta_priorY)
+MakeArrays(
+  chains,
+  Nsims,
+  num_conf,
+  starting_alphas,
+  starting_coefs,
+  starting_vars,
+  omega = 50000,
+  mu_priorX,
+  mu_priorY,
+  Sigma_priorX,
+  Sigma_priorY,
+  alpha_priorX,
+  alpha_priorY,
+  beta_priorX,
+  beta_priorY
+)
 }
 \arguments{
 \item{chains}{The number of MCMC chains.}

@@ -4,12 +4,14 @@
 \name{toyData}
 \alias{toyData}
 \title{Toy data set.}
-\format{A matrix with 100 rows and 52 columns.
+\format{
+A matrix with 100 rows and 52 columns.
 \describe{
   \item{Y}{Continuous outcome.}
   \item{X}{Continuous exposure}
   \item{D1, D2, ..., D50}{Possible confounders.}
-}}
+}
+}
 \usage{
 toyData
 }

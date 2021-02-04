@@ -4,8 +4,17 @@
 \alias{UpdateVariances}
 \title{MCMC update of the residual variance.}
 \usage{
-UpdateVariances(X, Y, D, current_alphas, current_coefs, alpha_priorX,
-  alpha_priorY, beta_priorX, beta_priorY)
+UpdateVariances(
+  X,
+  Y,
+  D,
+  current_alphas,
+  current_coefs,
+  alpha_priorX,
+  alpha_priorY,
+  beta_priorX,
+  beta_priorY
+)
 }
 \arguments{
 \item{X}{Vector of the treatment}

@@ -4,11 +4,25 @@
 \alias{BAC}
 \title{Bayesian Adjustment for Confounding}
 \usage{
-BAC(X, Y, D, chains, Nsims, mu_priorX = NULL, mu_priorY = NULL,
-  Sigma_priorX = NULL, Sigma_priorY = NULL, alpha_priorX = 0.01,
-  alpha_priorY = 0.01, beta_priorX = 0.01, beta_priorY = 0.01,
-  omega = 50000, starting_alphas = NULL, starting_coefs = NULL,
-  starting_vars = NULL)
+BAC(
+  X,
+  Y,
+  D,
+  chains,
+  Nsims,
+  mu_priorX = NULL,
+  mu_priorY = NULL,
+  Sigma_priorX = NULL,
+  Sigma_priorY = NULL,
+  alpha_priorX = 0.01,
+  alpha_priorY = 0.01,
+  beta_priorX = 0.01,
+  beta_priorY = 0.01,
+  omega = 50000,
+  starting_alphas = NULL,
+  starting_coefs = NULL,
+  starting_vars = NULL
+)
 }
 \arguments{
 \item{X}{Vector of the treatment}
