@@ -26,5 +26,5 @@ ModelWeights <- function(bac, model = c('Outcome', 'Exposure')) {
   unique_alpha[, proportion := number_times / nrow(alphas)]
   data.table::setorder(unique_alpha, - number_times)
   
-  return(unique_alpha)
+  return(as.data.frame(unique_alpha))
 }
